@@ -1,6 +1,3 @@
-<?php
-include_once ("vendor/autoload.php");
-?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
 <head>
@@ -39,40 +36,32 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
           rel='stylesheet' type='text/css'>
     <script src="assets/js/jquery.easing.min.js"></script>
 </head>
-<script>
+<body>
 <?php
-include_once ("frontEnd/header.html");?>
+include("views/frontEnd/includes/header.php");?>
+<!-- banner -->
 <div class="banner-grid">
     <div id="visual">
         <div class="slide-visual">
             <!-- Slide Image Area (1000 x 424) -->
             <ul class="slide-group">
-                <li><img class="img-responsive" src="assets/images/ba1.jpg" alt="Dummy Image"/></li>
-                <li><img class="img-responsive" src="assets/images/ba2.jpg" alt="Dummy Image"/></li>
-                <li><img class="img-responsive" src="assets/images/ba3.jpg" alt="Dummy Image"/></li>
+                <li><img class="img-responsive" src="assets/images/ba1.jpg" alt="Dummy Image" /></li>
+                <li><img class="img-responsive" src="assets/images/ba2.jpg" alt="Dummy Image" /></li>
+                <li><img class="img-responsive" src="assets/images/ba3.jpg" alt="Dummy Image" /></li>
             </ul>
 
             <!-- Slide Description Image Area (316 x 328) -->
             <div class="script-wrap">
                 <ul class="script-group">
-                    <li>
-                        <div class="inner-script"><img class="img-responsive" src="assets/images/baa1.jpg" alt="Dummy Image"/>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="inner-script"><img class="img-responsive" src="assets/images/baa2.jpg" alt="Dummy Image"/>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="inner-script"><img class="img-responsive" src="assets/images/baa3.jpg" alt="Dummy Image"/>
-                        </div>
-                    </li>
+                    <li><div class="inner-script"><img class="img-responsive" src="assets/images/baa1.jpg" alt="Dummy Image" /></div></li>
+                    <li><div class="inner-script"><img class="img-responsive" src="assets/images/baa2.jpg" alt="Dummy Image" /></div></li>
+                    <li><div class="inner-script"><img class="img-responsive" src="assets/images/baa3.jpg" alt="Dummy Image" /></div></li>
                 </ul>
                 <div class="slide-controller">
-                    <a href="#" class="btn-prev"><img src="assets/images/btn_prev.png" alt="Prev Slide"/></a>
-                    <a href="#" class="btn-play"><img src="assets/images/btn_play.png" alt="Start Slide"/></a>
-                    <a href="#" class="btn-pause"><img src="assets/images/btn_pause.png" alt="Pause Slide"/></a>
-                    <a href="#" class="btn-next"><img src="assets/images/btn_next.png" alt="Next Slide"/></a>
+                    <a href="#" class="btn-prev"><img src="assets/images/btn_prev.png" alt="Prev Slide" /></a>
+                    <a href="#" class="btn-play"><img src="assets/images/btn_play.png" alt="Start Slide" /></a>
+                    <a href="#" class="btn-pause"><img src="assets/images/btn_pause.png" alt="Pause Slide" /></a>
+                    <a href="#" class="btn-next"><img src="assets/images/btn_next.png" alt="Next Slide" /></a>
                 </div>
             </div>
             <div class="clearfix"></div>
@@ -82,12 +71,12 @@ include_once ("frontEnd/header.html");?>
     <script type="text/javascript" src="assets/js/pignose.layerslider.js"></script>
     <script type="text/javascript">
         //<![CDATA[
-        $(window).load(function () {
+        $(window).load(function() {
             $('#visual').pignoseLayerSlider({
-                play: '.btn-play',
-                pause: '.btn-pause',
-                next: '.btn-next',
-                prev: '.btn-prev'
+                play    : '.btn-play',
+                pause   : '.btn-pause',
+                next    : '.btn-next',
+                prev    : '.btn-prev'
             });
         });
         //]]>
@@ -796,9 +785,9 @@ include_once ("frontEnd/header.html");?>
         </div>
     </div>
 </div>
-<!-- //product-nav -->
 <?php
-    include_once ("frontEnd/footer.html");?>
+include("views/frontEnd/includes/footer.php"); ?>
+
 <!-- login -->
 <div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
@@ -838,16 +827,15 @@ include_once ("frontEnd/header.html");?>
                         </div>
                         <div class="login-right">
                             <h3>Sign in with your account</h3>
-                            <form>
+                            <form method="POST" action="Src/action.php">
                                 <div class="sign-in">
                                     <h4>User Name :</h4>
-                                    <input type="text" value="Type here" name="username" id="username" onfocus="this.value = '';"
-                                           onblur="if (this.value == '') {this.value = 'Type here';}" required="">
+                                    <input type="text" value="" name="username" id="username" required="" placeholder="Username">
                                 </div>
                                 <div class="sign-in">
                                     <h4>Password :</h4>
-                                    <input type="password" value="Password" name="password" id="password" onfocus="this.value = '';"
-                                           onblur="if (this.value == '') {this.value = 'Password';}" required="">
+                                    <input type="password" value="" name="password" id="password"
+                                            required="" placeholder="Password">
                                     <a href="#">Forgot password?</a>
                                 </div>
                                 <div class="single-bottom">
@@ -855,7 +843,7 @@ include_once ("frontEnd/header.html");?>
                                     <label for="brand"><span></span>Remember Me.</label>
                                 </div>
                                 <div class="sign-in">
-                                    <input type="submit" name="signin" id="signin_btn" value="SIGNIN">
+                                    <input type="submit" name="signin" id="signin" value="SIGN IN">
                                 </div>
                             </form>
                         </div>
@@ -869,28 +857,6 @@ include_once ("frontEnd/header.html");?>
     </div>
 </div>
 <!-- //login -->
-<script>
-    $(document).ready(function () {
-        $('#signin_btn').click(function () {
-            var username = $('#username').val();
-            var password = $('#password').val();
-            if (username != '' && password != '')
-            {
-                $.ajax({
-                    url: "frontEnd/action.php",
-                    method: "POST",
-                    data : {username:username, password:password},
-                    success:function (data) {
 
-                    }
-                })
-            }
-            else
-            {
-                alert("Both Feilds are required!!!");
-            }
-        })
-    })
-</script>
 </body>
 </html>
