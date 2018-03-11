@@ -6,7 +6,7 @@ $adminLogin = new AdminLogin();
 if ($_SERVER['REQUEST_MOTHED'] == 'POST')
 {
     $admin_user = $_POST['admin_user'];
-    $admin_passwrd = $_POST['admin_password'];
+    $admin_password = $_POST['admin_password'];
 
     $loginCheck = $adminLogin->adminLogin($admin_user, $admin_password);
 }
