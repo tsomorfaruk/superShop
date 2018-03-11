@@ -3,12 +3,12 @@ include("../../vendor/autoload.php");
 use App\AdminLogin\AdminLogin;
 
 $adminLogin = new AdminLogin();
-if ($_SERVER['REQUEST_MOTHED'] == 'POST')
+if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
-    $admin_user = $_POST['admin_user'];
+    $admin_email = $_POST['admin_email'];
     $admin_password = $_POST['admin_password'];
 
-    $loginCheck = $adminLogin->adminLogin($admin_user, $admin_password);
+    $loginCheck = $adminLogin->adminLogin($admin_email, $admin_password);
 }
 
 ?>
@@ -50,11 +50,11 @@ if ($_SERVER['REQUEST_MOTHED'] == 'POST')
                         <fieldset>
                             <div class="form-group">
                                 <input class="form-control" placeholder="E-mail" name="admin_email" type="email"
-                                       autofocus>
+                                       autofocus required>
                             </div>
                             <div class="form-group">
                                 <input class="form-control" placeholder="Password" name="admin_password" type="password"
-                                       value="">
+                                       value="" required>
                             </div>
                             <div class="checkbox">
                                 <label>
