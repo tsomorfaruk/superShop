@@ -2,7 +2,8 @@
 
 namespace App\Config;
 include("config.php");
-use PDO;
+use mysqli;
+
 class Database
 {
     public $host = DB_HOST;
@@ -19,21 +20,14 @@ class Database
         $this->connectDB();
     }
 
-    public function connectDB()
+    private function connectDB()
     {
-        try
-        {
-            $this->link = new PDO('mysql:host=localhost; dbname=supershop_db','root', '');
-        }
-        catch (PDOException $error)
-        {
-            echo "ERROR: " . $error->getMessage();
-        }
-
-/*        if (!$this->link) {
+        $this->link = new mysqli($this->host, $this->user, $this->pass,
+            $this->dbname);
+        if (!$this->link) {
             $this->error = "Connection fail" . $this->link->connect_error;
             return false;
-        }*/
+        }
     }
 
 // Select or Read data
@@ -83,5 +77,4 @@ class Database
             return false;
         }
     }
-
 }

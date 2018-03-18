@@ -1,8 +1,8 @@
 <?php
 include("../../vendor/autoload.php");
-use App\AdminLogin\AdminLogin;
+use App\AdminLogin\Adminlogin;
 
-$adminLogin = new AdminLogin();
+$adminLogin = new Adminlogin();
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
     $admin_email = $_POST['admin_email'];
@@ -45,16 +45,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                 <div class="panel-heading">
                     <h3 class="panel-title">Please Log In</h3>
                 </div>
+                <span style="color: red; font-size: 18px">
+                    <?php
+                    if (isset($loginCheck))
+                    {
+                        echo $loginCheck;
+                    }
+                    ?>
+                </span>
                 <div class="panel-body">
                     <form action="login.php" method="post">
                         <fieldset>
                             <div class="form-group">
-                                <input class="form-control" placeholder="E-mail" name="admin_email" type="email"
-                                       autofocus required>
+                                <input class="form-control" placeholder="E-mail" name="admin_email" type="email">
                             </div>
                             <div class="form-group">
-                                <input class="form-control" placeholder="Password" name="admin_password" type="password"
-                                       value="" required>
+                                <input class="form-control" placeholder="Password" name="admin_password" type="password">
                             </div>
                             <div class="checkbox">
                                 <label>
