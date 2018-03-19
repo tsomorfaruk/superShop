@@ -1,5 +1,15 @@
 <?php
 include "../../vendor/autoload.php";
+use App\Category\Category;
+use App\Session\Session;
+$category = new Category();
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $categoryName = $_POST['categoryName'];
+    $categoryDescription = $_POST['categoryDescription'];
+    $publicationStatus = $_POST['publicationStatus'];
+
+    $categoryInsert = $category->categoryInsert($categoryName, $categoryDescription, $publicationStatus);
+}
 ?>
 
 <!DOCTYPE html>
@@ -35,57 +45,58 @@ include "../../vendor/autoload.php";
     <!-- Navigation -->
     <?php include("includes/navbar.php"); ?>
     <div id="page-wrapper">
-        <div class="container-fluid">
-
-            <!-- Page Heading -->
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header">
-                        Category
-                        <small>Statistics Overview</small>
-                    </h1>
-                </div>
-            </div>
-        </div>
+        <div class="container-fluid"
+        <!-- Page Heading -->
         <div class="row">
             <div class="col-lg-12">
-                <h3 class="page-header">Category Add</h3>
-                <h2 class="text-center text-success"></h2>
-                <form class="form-horizontal" method="post">
-                    <div class="well">
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Category Name</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" name="categoryName">
-                                <span class="text-danger"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Category Description</label>
-                            <div class="col-sm-10">
-                                <textarea class="form-control" name="categoryDescription" rows="8"></textarea>
-                                <span class="text-danger"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Publication Status</label>
-                            <div class="col-sm-10">
-                                <select class="form-control" name="publicationStatus">
-                                    <option>Select Publication status</option>
-                                    <option value="1">Published</option>
-                                    <option value="0">Unpublished</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" name="btn" class="btn btn-success btn-block"> Save Category Info
-                                </button>
-                            </div>
+                <h1 class="page-header">Category</h1>
+            </div>
+        </div>
+    </div>
+    <?php
+    if (isset($categoryInsert))
+    {
+        Session::get('message');
+    }
+    ?>
+    <div class="row">
+        <div class="col-lg-12">
+            <h3 class="page-header">Category Add</h3>
+            <h2 class="text-center text-success"></h2>
+            <form class="form-horizontal" method="post" action="addCategory.php">
+                <div class="well">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Category Name</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="categoryName" required>
+                            <span class="text-danger"></span>
                         </div>
                     </div>
-                </form>
-            </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Category Description</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" name="categoryDescription" rows="8" required></textarea>
+                            <span class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Publication Status</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" name="publicationStatus">
+                                <option>Select Publication status</option>
+                                <option value="1">Published</option>
+                                <option value="0">Unpublished</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" name="submit" class="btn btn-success btn-block"> Save Category Info
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>

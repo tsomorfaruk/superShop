@@ -225,3 +225,12 @@ ul.alert-dropdown {
 .panel-yellow > a:hover {
     color: #df8a13;
 }
+.success
+{
+    font-size: 18px;
+    color: #00ff00;
+}
+.error{
+    font-size: 18px;
+    color: #ff0000;
+}
