@@ -28,9 +28,8 @@ class Category
         $categoryInsert = $this->db->insert($query);
         if ($categoryInsert)
         {
-
             $msg = "<span class='success'><h2> Category Inserted Successfully. </h2></span>";
-            Session::set('message',$msg);
+            Session::set('message','Category Inserted Successfully.');
             header("Location:../../views/admin/addCategory.php");
         }
         else
@@ -38,5 +37,12 @@ class Category
             $msg = "<span class='error'><h2> Category Not Inserted. </h2></span>";
             return $msg;
         }
+    }
+    public function categoryManage()
+    {
+        $query = "SELECT * FROM category";
+        $categorymanage = $this->db->select($query);
+        $categories = $categorymanage->fetch_all();
+        return $categories;
     }
 }

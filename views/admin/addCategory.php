@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <?php
     if (isset($categoryInsert))
     {
-        Session::get('message');
+        echo Session::get('message');
     }
     ?>
     <div class="row">

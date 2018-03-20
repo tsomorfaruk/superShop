@@ -1,5 +1,9 @@
 <?php
 include "../../vendor/autoload.php";
+use App\Category\Category;
+
+$category = new Category();
+$categories = $category->categoryManage();
 ?>
 
 <!DOCTYPE html>
@@ -30,37 +34,62 @@ include "../../vendor/autoload.php";
 </head>
 
 <body>
-
 <div id="wrapper">
-
     <!-- Navigation -->
     <?php include("includes/navbar.php"); ?>
-
     <div id="page-wrapper">
-
         <div class="container-fluid">
-
-            <!-- Page Heading -->
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">
-                        Category
-                        <small>Statistics Overview</small>
-                    </h1>
+                    <h3 class="page-header">Show Category</h3>
+                    <h2 class="text-center text-success"></h2>
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Category Name</th>
+                            <th>Category Description</th>
+                            <th>Publication Status</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach ($categories as $category) {
+                            foreach ($category as $item=>$value) {
+                                ?>
+                                <tr>
+                                    <th scope="row"><?php echo $value; ?></th>
+                                    <td>{{$category->categoryName}}</td>
+                                    <td>{!! $category->categoryDescription !!}</td>
+                                    <td>{{$category->publicationStatus == 1? 'Published' : 'Unpublished'}}</td>
+                                    <td>
+                                        <a href="{{'/manufacturer/edit/'.$category->id}}" class="btn btn-success">
+                                            <span class="glyphicon glyphicon-edit"></span>
+                                        </a>
+                                        <a href="{{'/manufacturer/delete/'.$category->id}}" class="btn btn-danger"
+                                           onclick="return confirm('Are you want to delete this');">
+                                            <span class="glyphicon glyphicon-trash"></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            <?php }
+                        } ?>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
 
     </div>
 </div>
-    <!-- jQuery -->
-    <script src="../../assets/admin/js/jquery.js"></script>
-    <!-- Bootstrap Core JavaScript -->
-    <script src="../../assets/admin/js/bootstrap.min.js"></script>
-    <!-- Morris Charts JavaScript -->
-    <script src="../../assets/admin/js/plugins/morris/raphael.min.js"></script>
-    <script src="../../assets/admin/js/plugins/morris/morris.min.js"></script>
-    <script src="../../assets/admin/js/plugins/morris/morris-data.js"></script>
+<!-- jQuery -->
+<script src="../../assets/admin/js/jquery.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="../../assets/admin/js/bootstrap.min.js"></script>
+<!-- Morris Charts JavaScript -->
+<script src="../../assets/admin/js/plugins/morris/raphael.min.js"></script>
+<script src="../../assets/admin/js/plugins/morris/morris.min.js"></script>
+<script src="../../assets/admin/js/plugins/morris/morris-data.js"></script>
 </body>
 
 </html>
