@@ -45,4 +45,12 @@ class Category
         $categories = $categorymanage->fetch_all();
         return $categories;
     }
+    public function categoryById($id)
+    {
+        $query = "SELECT *FROM category WHERE category_id = '$id'";
+        $categoryById = $this->db->select($query);
+        $getCategoryById = $categoryById->fetch_assoc();
+        //$getCategoryById = mysqli_escape_string($getCategoryById);
+        return $getCategoryById;
+    }
 }

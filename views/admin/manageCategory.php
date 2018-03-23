@@ -29,11 +29,11 @@ $categories = $category->categoryManage();
     <link href="../../assets/admin/css/plugins/morris.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="../../assets/admin/css/font-awesome/font-awesome.min.css" rel="stylesheet" type="text/css">
-
+    <link href="../../assets/admin/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
+
 <div id="wrapper">
     <!-- Navigation -->
     <?php include("includes/navbar.php"); ?>
@@ -55,31 +55,29 @@ $categories = $category->categoryManage();
                         </thead>
                         <tbody>
                         <?php foreach ($categories as $category) {
-                            foreach ($category as $item=>$value) {
-                                ?>
-                                <tr>
-                                    <th scope="row"><?php echo $value; ?></th>
-                                    <td>{{$category->categoryName}}</td>
-                                    <td>{!! $category->categoryDescription !!}</td>
-                                    <td>{{$category->publicationStatus == 1? 'Published' : 'Unpublished'}}</td>
-                                    <td>
-                                        <a href="{{'/manufacturer/edit/'.$category->id}}" class="btn btn-success">
-                                            <span class="glyphicon glyphicon-edit"></span>
-                                        </a>
-                                        <a href="{{'/manufacturer/delete/'.$category->id}}" class="btn btn-danger"
-                                           onclick="return confirm('Are you want to delete this');">
-                                            <span class="glyphicon glyphicon-trash"></span>
-                                        </a>
-                                    </td>
-                                </tr>
-                            <?php }
+                            ?>
+                            <tr>
+                                <th scope="row"><?php echo $category[0]; ?></th>
+                                <td><?php echo $category[1]; ?></td>
+                                <td><?php echo $category[2]; ?></td>
+                                <td><?php echo $category[3] == 1 ? 'Published' : 'Unpublished'; ?></td>
+                                <td>
+                                    <a href="editCategory.php?catId=<?php echo $category[0]; ?>" class="btn btn-success">
+                                        <span class="glyphicon glyphicon-edit"></span>
+                                    </a>
+                                    <a href="{{'/manufacturer/delete/'.$category->id}}" class="btn btn-danger"
+                                       onclick="return confirm('Are you want to delete this');">
+                                        <span class="glyphicon glyphicon-trash"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                            <?php
                         } ?>
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 <!-- jQuery -->

@@ -1,15 +1,18 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: omor
+ * Date: 3/23/2018
+ * Time: 10:58 AM
+ */
 include "../../vendor/autoload.php";
 use App\Category\Category;
 use App\Session\Session;
+$id = $_GET['catId'];
 $category = new Category();
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $categoryName = $_POST['categoryName'];
-    $categoryDescription = $_POST['categoryDescription'];
-    $publicationStatus = $_POST['publicationStatus'];
+$getCategoryById = $category->categoryById($id);
 
-    $categoryInsert = $category->categoryInsert($categoryName, $categoryDescription, $publicationStatus);
-}
+
 ?>
 
 <!DOCTYPE html>
@@ -36,6 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <!-- Custom Fonts -->
     <link href="../../assets/admin/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
 </head>
 
 <body>
