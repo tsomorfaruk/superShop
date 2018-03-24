@@ -3,31 +3,34 @@
  * Created by PhpStorm.
  * User: omor
  * Date: 3/24/2018
- * Time: 12:26 PM
+ * Time: 7:26 PM
  */
 include "../../vendor/autoload.php";
 use App\Manufacture\Manufacture;
-use App\Session\Session;
-$manufacture = new Manufacture();
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $manufactureName = $_POST['manufactureName'];
-    $manufactureDescription = $_POST['manufactureDescription'];
-    $publicationStatus = $_POST['publicationStatus'];
-
-    $manufactureInsert = $manufacture->manufactureInsert($manufactureName, $manufactureDescription, $publicationStatus);
+$id = $_GET['manufacturerId'];
+$manufacturer = new Manufacture();
+if (!empty($_GET['manufacturerId']))
+{
+    $getManufacturerById = $manufacturer->manufacturerById($id);
 }
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $manufacturerId = $_POST['manufacturerId'];
+    $manufacturerName = $_POST['manufacturerName'];
+    $manufacturerDescription = $_POST['manufacturerDescription'];
+    $publicationStatus = $_POST['publicationStatus'];
+    $manufacturerUpdate = $manufacturer->manufacturerUpdate($manufacturerId, $manufacturerName, $manufacturerDescription, $publicationStatus);
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Admin Theme - Manufacturer Add</title>
+    <title>Admin Theme</title>
     <link href="../../assets/admin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="../../assets/admin/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
     <link href="../../assets/admin/dist/css/sb-admin-2.css" rel="stylesheet">
@@ -47,23 +50,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </nav>
 
     <div id="page-wrapper">
+        <?php
+        if (isset($categoryInsert)) {
+            echo Session::get('message');
+        }
+        ?>
         <div class="row">
             <div class="col-lg-12">
-                <h3 class="page-header">Manufacture Add</h3>
+                <h3 class="page-header">Category Edit</h3>
                 <h2 class="text-center text-success"></h2>
-                <form class="form-horizontal" method="post" action="addManufacturer.php">
+                <form class="form-horizontal" method="post" action="editManufacturer.php" name="editManufacturerForm">
                     <div class="well">
+                        <input type="hidden" name="manufacturerId" value="<?php echo $getManufacturerById['manufacture_id']; ?>">
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Manufacture Name</label>
+                            <label class="col-sm-2 control-label">Category Name</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="manufactureName" required>
+                                <input type="text" class="form-control" name="manufacturerName"
+                                       value="<?php echo $getManufacturerById['manufacture_name']; ?>" required>
                                 <span class="text-danger"></span>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Manufacture Description</label>
+                            <label class="col-sm-2 control-label">Category Description</label>
                             <div class="col-sm-10">
-                                <textarea class="form-control" name="manufactureDescription" rows="8" required></textarea>
+                            <textarea class="form-control" name="manufacturerDescription" rows="8"
+                                      required><?php echo $getManufacturerById['manufacture_description']; ?></textarea>
                                 <span class="text-danger"></span>
                             </div>
                         </div>
@@ -88,7 +99,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
         </div>
     </div>
-
+    <script>
+        document.forms['editManufacturerForm'].elements['publicationStatus'].value = "<?php echo $getManufacturerById['publicationStatus'];?>"
+    </script>
     <script src="../../assets/admin/vendor/jquery/jquery.min.js"></script>
     <script src="../../assets/admin/vendor/bootstrap/js/bootstrap.min.js"></script>
     <script src="../../assets/admin/vendor/metisMenu/metisMenu.min.js"></script>

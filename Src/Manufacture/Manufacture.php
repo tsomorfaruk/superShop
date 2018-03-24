@@ -37,4 +37,54 @@ class Manufacture
             return $msg;
         }
     }
+
+    public function manufacturerManage()
+    {
+        $query = "SELECT * FROM manufactures";
+        $manufacturermanage = $this->db->select($query);
+        $manufacturers = $manufacturermanage->fetch_all();
+        return $manufacturers;
+    }
+
+    public function manufacturerById($id)
+    {
+        $query = "SELECT *FROM manufactures WHERE manufacture_id = '$id'";
+        $manufacturerById = $this->db->select($query);
+        $getManufacturerById = $manufacturerById->fetch_assoc();
+        return $getManufacturerById;
+    }
+
+    public function manufacturerUpdate($manufacturerId,$manufacturerName,$manufacturerDescription,$publicationStatus)
+    {
+        $query = "UPDATE manufactures SET manufacture_name='$manufacturerName',manufacture_description='$manufacturerDescription', publicationStatus='$publicationStatus' WHERE manufacture_id='$manufacturerId'";
+        $manufacturerUpdate = $this->db->update($query);
+        if ($manufacturerUpdate)
+        {
+            $msg = "<span class='success'><h2> Manufacturer Updated Successfully. </h2></span>";
+            Session::set('message','Manufacturer Updated Successfully.');
+            header("Location:../../views/admin/manageManufacturer.php");
+        }
+        else
+        {
+            $msg = "<span class='error'><h2> Manufacturer Not Updated. </h2></span>";
+            return $msg;
+        }
+    }
+
+    public function manufacturerDelete($id='')
+    {
+        $query = "DELETE FROM manufactures WHERE manufacture_id='$id'";
+        $manufacturerDelete = $this->db->delete($query);
+        if ($manufacturerDelete)
+        {
+            $msg = "<span class='success'><h2> Manufacturer Deleted Successfully. </h2></span>";
+            Session::set('message','Manufacturer Deleted Successfully.');
+            header("Location:../../views/admin/manageManufacturer.php");
+        }
+        else
+        {
+            $msg = "<span class='error'><h2> Manufacturer Not Deleted. </h2></span>";
+            return $msg;
+        }
+    }
 }

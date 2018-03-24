@@ -23,109 +23,92 @@ $id = $_GET['catId'];
     }
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-
-    <title>SB Admin - Bootstrap Admin Template</title>
-
-    <!-- Bootstrap Core CSS -->
-    <link href="../../assets/admin/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="../../assets/admin/css/sb-admin.css" rel="stylesheet">
-
-    <!-- Morris Charts CSS -->
-    <link href="../../assets/admin/css/plugins/morris.css" rel="stylesheet">
-
-    <!-- Custom Fonts -->
-    <link href="../../assets/admin/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
+    <title>Admin Theme</title>
+    <link href="../../assets/admin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../assets/admin/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+    <link href="../../assets/admin/dist/css/sb-admin-2.css" rel="stylesheet">
+    <link href="../../assets/admin/vendor/morrisjs/morris.css" rel="stylesheet">
+    <link href="../../assets/admin/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 </head>
 
 <body>
-
 <div id="wrapper">
     <!-- Navigation -->
-    <?php include("includes/navbar.php"); ?>
+    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+
+        <?php include("includes/header.php");
+        include("includes/menubar.php") ?>
+    </nav>
+
     <div id="page-wrapper">
-        <div class="container-fluid"
-        <!-- Page Heading -->
+        <?php
+        if (isset($categoryInsert)) {
+            echo Session::get('message');
+        }
+        ?>
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Category</h1>
+                <h3 class="page-header">Category Edit</h3>
+                <h2 class="text-center text-success"></h2>
+                <form class="form-horizontal" method="post" action="editCategory.php" name="editCategoryForm">
+                    <div class="well">
+                        <input type="hidden" name="categoryId" value="<?php echo $getCategoryById['category_id']; ?>">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Category Name</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="categoryName"
+                                       value="<?php echo $getCategoryById['category_name']; ?>" required>
+                                <span class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Category Description</label>
+                            <div class="col-sm-10">
+                            <textarea class="form-control" name="categoryDescription" rows="8"
+                                      required><?php echo $getCategoryById['category_discription']; ?></textarea>
+                                <span class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Publication Status</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" name="publicationStatus">
+                                    <option>Select Publication status</option>
+                                    <option value="1">Published</option>
+                                    <option value="0">Unpublished</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" name="submit" class="btn btn-success btn-block"> Save Category Info
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-    <?php
-    if (isset($categoryInsert)) {
-        echo Session::get('message');
-    }
-    ?>
-    <div class="row">
-        <div class="col-lg-12">
-            <h3 class="page-header">Category Add</h3>
-            <h2 class="text-center text-success"></h2>
-            <form class="form-horizontal" method="post" action="editCategory.php" name="editCategoryForm">
-                <div class="well">
-                    <input type="hidden" name="categoryId" value="<?php echo $getCategoryById['category_id']; ?>">
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Category Name</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="categoryName"
-                                   value="<?php echo $getCategoryById['category_name']; ?>" required>
-                            <span class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Category Description</label>
-                        <div class="col-sm-10">
-                            <textarea class="form-control" name="categoryDescription" rows="8"
-                                      required><?php echo $getCategoryById['category_discription']; ?></textarea>
-                            <span class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Publication Status</label>
-                        <div class="col-sm-10">
-                            <select class="form-control" name="publicationStatus">
-                                <option>Select Publication status</option>
-                                <option value="1">Published</option>
-                                <option value="0">Unpublished</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" name="submit" class="btn btn-success btn-block"> Save Category Info
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<script>
-    document.forms['editCategoryForm'].elements['publicationStatus'].value = "<?php echo $getCategoryById['publication_status'];?>"
-</script>
-<!-- jQuery -->
-<script src="../../assets/admin/js/jquery.js"></script>
-<!-- Bootstrap Core JavaScript -->
-<script src="../../assets/admin/js/bootstrap.min.js"></script>
-<!-- Morris Charts JavaScript -->
-<script src="../../assets/admin/js/plugins/morris/raphael.min.js"></script>
-<script src="../../assets/admin/js/plugins/morris/morris.min.js"></script>
-<script src="../../assets/admin/js/plugins/morris/morris-data.js"></script>
+    <script>
+        document.forms['editCategoryForm'].elements['publicationStatus'].value = "<?php echo $getCategoryById['publication_status'];?>"
+    </script>
+    <script src="../../assets/admin/vendor/jquery/jquery.min.js"></script>
+    <script src="../../assets/admin/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../assets/admin/vendor/metisMenu/metisMenu.min.js"></script>
+    <script src="../../assets/admin/vendor/raphael/raphael.min.js"></script>
+    <script src="../../assets/admin/vendor/morrisjs/morris.min.js"></script>
+    <script src="../../assets/admin/data/morris-data.js"></script>
+    <script src="../../assets/admin/dist/js/sb-admin-2.js"></script>
 </body>
-
 </html>
