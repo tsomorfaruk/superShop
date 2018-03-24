@@ -5,6 +5,12 @@
  * Date: 3/24/2018
  * Time: 12:26 PM
  */
+include "../../vendor/autoload.php";
+use App\Manufacture\Manufacture;
+use App\Session\Session;
+
+$manufacturer = new Manufacture();
+$manufacturers = $manufacturer->manufacturerManage();
 ?>
 
 <!DOCTYPE html>
@@ -38,55 +44,48 @@
 <div id="wrapper">
     <!-- Navigation -->
     <?php include("includes/navbar.php"); ?>
-<div id="page-wrapper">
-    <div class="container-fluid"
-    <!-- Page Heading -->
-    <div class="row">
-        <div class="col-lg-12">
-            <h1 class="page-header">Manufacture</h1>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-lg-12">
-        <h3 class="page-header">Manufacture Add</h3>
-        <h2 class="text-center text-success"></h2>
-        <form class="form-horizontal" method="post" action="addManufacturer.php">
-            <div class="well">
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">Manufacture Name</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="manufactureName" required>
-                        <span class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">Manufacture Description</label>
-                    <div class="col-sm-10">
-                        <textarea class="form-control" name="manufactureDescription" rows="8" required></textarea>
-                        <span class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">Publication Status</label>
-                    <div class="col-sm-10">
-                        <select class="form-control" name="publicationStatus">
-                            <option>Select Publication status</option>
-                            <option value="1">Published</option>
-                            <option value="0">Unpublished</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" name="submit" class="btn btn-success btn-block"> Save Category Info
-                        </button>
-                    </div>
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3 class="page-header">Show Manufacturer</h3>
+                    <h2 class="text-center text-success"><?php Session::get('message')?></h2>
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Manufacturer Name</th>
+                            <th>Manufacturer Description</th>
+                            <th>Publication Status</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach ($manufacturers as $manufacturer) {
+                            ?>
+                            <tr>
+                                <th scope="row"><?php echo $manufacturer[0]; ?></th>
+                                <td><?php echo $manufacturer[1]; ?></td>
+                                <td><?php echo $manufacturer[2]; ?></td>
+                                <td><?php echo $manufacturer[3] == 1 ? 'Published' : 'Unpublished'; ?></td>
+                                <td>
+                                    <a href="editManufacturer.php?catId=<?php echo $manufacturer[0]; ?>" class="btn btn-success">
+                                        <span class="glyphicon glyphicon-edit"></span>
+                                    </a>
+                                    <a href="deleteManufacturer.php?catId=<?php echo $manufacturer[0]; ?>" class="btn btn-danger"
+                                       onclick="return confirm('Are you want to delete this');">
+                                        <span class="glyphicon glyphicon-trash"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                            <?php
+                        } ?>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-        </form>
+        </div>
     </div>
-</div>
 </div>
 <!-- jQuery -->
 <script src="../../assets/admin/js/jquery.js"></script>
