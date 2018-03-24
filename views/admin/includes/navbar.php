@@ -42,14 +42,25 @@ Session::checkSession();
             <li class="active">
                 <a href="dashboard.php"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
             </li>
-            <li>
-                <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Category <i class="fa fa-fw fa-caret-down"></i></a>
+            <!--<li>
+                <a href="javascript:" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Category <i class="fa fa-fw fa-caret-down"></i></a>
                 <ul id="demo" class="collapse">
                     <li>
                         <a href="addCategory.php">Add Category</a>
                     </li>
                     <li>
                         <a href="manageCategory.php">Manage Category</a>
+                    </li>
+                </ul>
+            </li>-->
+            <li>
+                <a href="javascript:" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Manufacturer <i class="fa fa-fw fa-caret-down"></i></a>
+                <ul id="demo" class="collapse">
+                    <li>
+                        <a href="addManufacturer.php">Add Manufacturer</a>
+                    </li>
+                    <li>
+                        <a href="manageManufacturer.php">Manage Manufacturer</a>
                     </li>
                 </ul>
             </li>

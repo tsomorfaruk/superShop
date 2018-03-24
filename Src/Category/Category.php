@@ -31,6 +31,7 @@ class Category
             $msg = "<span class='success'><h2> Category Inserted Successfully. </h2></span>";
             Session::set('message','Category Inserted Successfully.');
             header("Location:../../views/admin/addCategory.php");
+            //redirect("Location:../../views/admin/addCategory.php")->with('message', 'Category Inserted Successfully.');
         }
         else
         {
@@ -52,5 +53,39 @@ class Category
         $getCategoryById = $categoryById->fetch_assoc();
         //$getCategoryById = mysqli_escape_string($getCategoryById);
         return $getCategoryById;
+    }
+    public function categoryUpdate($categoryId,$categoryName,$categoryDescription,$publicationStatus)
+    {
+        $query = "UPDATE category SET category_name='$categoryName',category_discription='$categoryDescription', publication_status='$publicationStatus' WHERE category_id='$categoryId'";
+        $categoryUpdate = $this->db->update($query);
+        if ($categoryUpdate)
+        {
+            $msg = "<span class='success'><h2> Category Inserted Successfully. </h2></span>";
+            Session::set('message','Category Updated Successfully.');
+            header("Location:../../views/admin/manageCategory.php");
+           // redirect("Location:../../views/admin/manageCategory.php")->with('message', 'Category Inserted Successfully.');
+        }
+        else
+        {
+            $msg = "<span class='error'><h2> Category Not Updated. </h2></span>";
+            return $msg;
+        }
+    }
+    public function categoryDelete($id='')
+    {
+        $query = "DELETE FROM category WHERE category_id='$id'";
+        $categoryDelete = $this->db->delete($query);
+        if ($categoryDelete)
+        {
+            $msg = "<span class='success'><h2> Category Inserted Successfully. </h2></span>";
+            Session::set('message','Category Deleted Successfully.');
+            header("Location:../../views/admin/manageCategory.php");
+            // redirect("Location:../../views/admin/manageCategory.php")->with('message', 'Category Inserted Successfully.');
+        }
+        else
+        {
+            $msg = "<span class='error'><h2> Category Not Updated. </h2></span>";
+            return $msg;
+        }
     }
 }

@@ -25,7 +25,7 @@ include "../../vendor/autoload.php";
     <link href="../../assets/admin/css/plugins/morris.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="../../assets/admin/css/font-awesome/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="../../assets/admin/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
 </head>
 

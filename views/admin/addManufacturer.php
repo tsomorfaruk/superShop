@@ -2,26 +2,20 @@
 /**
  * Created by PhpStorm.
  * User: omor
- * Date: 3/23/2018
- * Time: 10:58 AM
+ * Date: 3/24/2018
+ * Time: 12:26 PM
  */
 include "../../vendor/autoload.php";
-use App\Category\Category;
-$id = $_GET['catId'];
-    $category = new Category();
-    if (!empty($_GET['catId']))
-    {
-        $getCategoryById = $category->categoryById($id);
-    }
+use App\Manufacture\Manufacture;
+use App\Session\Session;
+$manufacture = new Manufacture();
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $manufactureName = $_POST['manufactureName'];
+    $manufactureDescription = $_POST['manufactureDescription'];
+    $publicationStatus = $_POST['publicationStatus'];
 
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $categoryId = $_POST['categoryId'];
-        $categoryName = $_POST['categoryName'];
-        $categoryDescription = $_POST['categoryDescription'];
-        $publicationStatus = $_POST['publicationStatus'];
-        $categoryUpdate = $category->categoryUpdate($categoryId, $categoryName, $categoryDescription, $publicationStatus);
-    }
-
+    $manufactureInsert = $manufacture->manufactureInsert($manufactureName, $manufactureDescription, $publicationStatus);
+}
 ?>
 
 <!DOCTYPE html>
@@ -48,7 +42,6 @@ $id = $_GET['catId'];
 
     <!-- Custom Fonts -->
     <link href="../../assets/admin/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
 </head>
 
 <body>
@@ -61,35 +54,27 @@ $id = $_GET['catId'];
         <!-- Page Heading -->
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Category</h1>
+                <h1 class="page-header">Manufacture</h1>
             </div>
         </div>
     </div>
-    <?php
-    if (isset($categoryInsert)) {
-        echo Session::get('message');
-    }
-    ?>
     <div class="row">
         <div class="col-lg-12">
-            <h3 class="page-header">Category Add</h3>
+            <h3 class="page-header">Manufacture Add</h3>
             <h2 class="text-center text-success"></h2>
-            <form class="form-horizontal" method="post" action="editCategory.php" name="editCategoryForm">
+            <form class="form-horizontal" method="post" action="addManufacturer.php">
                 <div class="well">
-                    <input type="hidden" name="categoryId" value="<?php echo $getCategoryById['category_id']; ?>">
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">Category Name</label>
+                        <label class="col-sm-2 control-label">Manufacture Name</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="categoryName"
-                                   value="<?php echo $getCategoryById['category_name']; ?>" required>
+                            <input type="text" class="form-control" name="manufactureName" required>
                             <span class="text-danger"></span>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">Category Description</label>
+                        <label class="col-sm-2 control-label">Manufacture Description</label>
                         <div class="col-sm-10">
-                            <textarea class="form-control" name="categoryDescription" rows="8"
-                                      required><?php echo $getCategoryById['category_discription']; ?></textarea>
+                            <textarea class="form-control" name="manufactureDescription" rows="8" required></textarea>
                             <span class="text-danger"></span>
                         </div>
                     </div>
@@ -114,10 +99,6 @@ $id = $_GET['catId'];
         </div>
     </div>
 </div>
-
-<script>
-    document.forms['editCategoryForm'].elements['publicationStatus'].value = "<?php echo $getCategoryById['publication_status'];?>"
-</script>
 <!-- jQuery -->
 <script src="../../assets/admin/js/jquery.js"></script>
 <!-- Bootstrap Core JavaScript -->

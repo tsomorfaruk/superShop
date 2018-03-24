@@ -1,6 +1,7 @@
 <?php
 include "../../vendor/autoload.php";
 use App\Category\Category;
+use App\Session\Session;
 
 $category = new Category();
 $categories = $category->categoryManage();
@@ -42,7 +43,7 @@ $categories = $category->categoryManage();
             <div class="row">
                 <div class="col-lg-12">
                     <h3 class="page-header">Show Category</h3>
-                    <h2 class="text-center text-success"></h2>
+                    <h2 class="text-center text-success"><?php Session::get('message')?></h2>
                     <table class="table table-bordered table-hover">
                         <thead>
                         <tr>
@@ -65,7 +66,7 @@ $categories = $category->categoryManage();
                                     <a href="editCategory.php?catId=<?php echo $category[0]; ?>" class="btn btn-success">
                                         <span class="glyphicon glyphicon-edit"></span>
                                     </a>
-                                    <a href="{{'/manufacturer/delete/'.$category->id}}" class="btn btn-danger"
+                                    <a href="deleteCategory.php?catId=<?php echo $category[0]; ?>" class="btn btn-danger"
                                        onclick="return confirm('Are you want to delete this');">
                                         <span class="glyphicon glyphicon-trash"></span>
                                     </a>
