@@ -36,6 +36,17 @@
                     </li>
                 </ul>
             </li>
+            <li>
+                <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Product Info<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="addProduct.php">Add Product</a>
+                    </li>
+                    <li>
+                        <a href="manageProduct.php">Manage Product</a>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </div>
 </div>
