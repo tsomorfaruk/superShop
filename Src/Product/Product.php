@@ -58,4 +58,16 @@ class Product
         }
 
     }
+
+    public function productManage()
+    {
+        $query = "SELECT products.*,category.category_name,manufactures.manufacture_name
+        FROM products
+        INNER JOIN category
+        ON products.category_id = category.category_id
+        INNER JOIN manufactures
+        ON products.manufacturer_id = manufactures.manufacture_id";
+        $productmanage = $this->db->select($query);
+        return $productmanage;
+    }
 }
