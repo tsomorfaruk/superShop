@@ -11,14 +11,9 @@ use App\Category\Category;
 use App\Manufacture\Manufacture;
 use App\Session\Session;
 $product = new Product();
-if ($_SERVER['REQUEST_METHOD'] == 'POST' || isset($_POST['submit'])) {
-
-
-    $productInsert = $product->productInsert($_POST, $_FILES);
-    print_r($productInsert);
-    die();
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submitBtn'])) {
+    $productInsert = $product->productInsert($_POST,$_FILES);
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -53,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || isset($_POST['submit'])) {
             <div class="col-lg-12">
                 <h3 class="page-header">Product Add</h3>
                 <h2 class="text-center text-success"></h2>
-                <form class="form-horizontal" method="post" action="addProduct.php">
+                <form class="form-horizontal" method="post" action="addProduct.php" enctype="multipart/form-data">
                     <div class="well">
                         <div class="form-group">
                             <label for="inputEmail3" class="col-sm-2 control-label">Product Name</label>
@@ -129,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || isset($_POST['submit'])) {
                         <div class="form-group">
                             <label for="inputEmail3" class="col-sm-2 control-label">Product Image</label>
                             <div class="col-sm-10">
-                                <input type="file" name="productImage" accept="image/*">
+                                <input type="file" name="productImage"/>
                                 <span class="text-danger"></span>
                             </div>
                         </div>
@@ -146,7 +141,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || isset($_POST['submit'])) {
 
                         <div class="form-group" >
                             <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" name="submit" class="btn btn-success btn-block"> Save Product Info
+                                <button type="submit" name="submitBtn" class="btn btn-success btn-block"> Save Product Info
                                 </button>
                             </div>
                         </div>
