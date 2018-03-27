@@ -9,5 +9,4 @@ include "../../vendor/autoload.php";
 use App\Category\Category;
 
 $category = new Category();
-    $categoryDelete = $category->categoryDelete($_GET['catId'])
-?>
+    $categoryDelete = $category->categoryDelete($_GET['catId']);

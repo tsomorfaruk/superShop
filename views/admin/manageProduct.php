@@ -8,8 +8,6 @@
 include "../../vendor/autoload.php";
 use App\Product\Product;
 use App\Session\Session;
-use App\Category\Category;
-use App\Manufacture\Manufacture;
 
 $product = new Product();
 $products = $product->productManage();
@@ -98,7 +96,6 @@ $products = $product->productManage();
             </div>
         </div>
     </div>
-
     <script src="../../assets/admin/vendor/jquery/jquery.min.js"></script>
     <script src="../../assets/admin/vendor/bootstrap/js/bootstrap.min.js"></script>
     <script src="../../assets/admin/vendor/metisMenu/metisMenu.min.js"></script>

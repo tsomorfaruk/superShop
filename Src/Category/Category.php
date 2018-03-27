@@ -77,14 +77,14 @@ class Category
         $categoryDelete = $this->db->delete($query);
         if ($categoryDelete)
         {
-            $msg = "<span class='success'><h2> Category Inserted Successfully. </h2></span>";
+            $msg = "<span class='success'><h2> Category Deleted Successfully. </h2></span>";
             Session::set('message','Category Deleted Successfully.');
             header("Location:../../views/admin/manageCategory.php");
             // redirect("Location:../../views/admin/manageCategory.php")->with('message', 'Category Inserted Successfully.');
         }
         else
         {
-            $msg = "<span class='error'><h2> Category Not Updated. </h2></span>";
+            $msg = "<span class='error'><h2> Category Not Deleted. </h2></span>";
             return $msg;
         }
     }
