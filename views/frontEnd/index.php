@@ -239,8 +239,8 @@ include("includes/header.php"); ?>
                             <div class="col-md-3 product-men">
                                 <div class="men-pro-item simpleCart_shelfItem">
                                     <div class="men-thumb-item">
-                                        <img src="../../assets/images/a1.png" alt="" class="pro-image-front">
-                                        <img src="../../assets/images/a1.png" alt="" class="pro-image-back">
+                                        <img src="<?php echo $getPublishedProduct['product_image'];?>" height="220px" alt="" class="pro-image-front">
+                                        <img src="<?php echo $getPublishedProduct['product_image'];?>" height="220px" alt="" class="pro-image-back">
                                         <div class="men-cart-pro">
                                             <div class="inner-men-cart-pro">
                                                 <a href="single.php?productId=<?php echo $getPublishedProduct['product_id'];?>" class="link-product-add-cart">Quick View</a>

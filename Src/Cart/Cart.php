@@ -43,4 +43,25 @@ class Cart
             header("Location:404.php");
         }
     }
+
+    public function getCartProduct(){
+        Session::init();
+        $sessionId = session_id();
+        $query = "SELECT cart.*,products.product_quantity
+        FROM cart
+        INNER JOIN products
+        ON cart.product_id = products.product_id
+        WHERE session_id='$sessionId'";
+        $getCartProduct = $this->db->select($query);
+        return $getCartProduct;
+    }
+/*    public function getProductQuantity()
+    {
+        $query = "SELECT cart.*,products.product_quantity
+        FROM cart
+        INNER JOIN category
+        ON cart.product_id = products.id
+        WHERE session_id='$sessionId'";
+        $getProductDetailsById = $this->db->select($query);
+    }*/
 }

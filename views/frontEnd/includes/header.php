@@ -10,7 +10,7 @@ $database = new Database();
 $format = new Format();
 $product = new Product();
 $cart = new Cart();
-
+$getPubli
 ?>
 
 <!-- header -->
