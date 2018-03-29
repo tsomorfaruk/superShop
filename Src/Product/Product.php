@@ -7,7 +7,6 @@
  */
 
 namespace App\Product;
-include "../../vendor/autoload.php";
 use App\Config\Database;
 use App\Helpers\Format;
 use App\Session\Session;
@@ -150,5 +149,25 @@ class Product
             $msg = "<span class='error'><h2> Product Not Deleted. </h2></span>";
             return $msg;
         }
+    }
+
+    public function getPublishedProduct()
+    {
+        $query = "SELECT * FROM products WHERE publication_status='1'";
+        $getPublishedProducts = $this->db->select($query);
+        return $getPublishedProducts;
+    }
+
+    public function getProductDetailsById($id ='')
+    {
+        $query = "SELECT products.*,category.category_name,manufactures.manufacture_name
+        FROM products
+        INNER JOIN category
+        ON products.category_id = category.category_id
+        INNER JOIN manufactures
+        ON products.manufacturer_id = manufactures.manufacture_id
+        WHERE product_id = '$id'";
+        $getProductDetailsById = $this->db->select($query);
+        return $getProductDetailsById;
     }
 }

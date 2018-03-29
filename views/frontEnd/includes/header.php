@@ -1,3 +1,18 @@
+<?php
+
+use App\Session\Session;
+use App\Config\Database;
+use App\Helpers\Format;
+use App\Product\Product;
+use App\Cart\Cart;
+Session::init();
+$database = new Database();
+$format = new Format();
+$product = new Product();
+$cart = new Cart();
+
+?>
+
 <!-- header -->
 <div class="header">
     <div class="container">
@@ -15,7 +30,7 @@
 <div class="header-bot">
     <div class="container">
         <div class="col-md-3 header-left">
-            <h1><a href="index.php"><img src="assets/images/logo3.jpg"></a></h1>
+            <h1><a href="../../index.html"><img src="../../assets/images/logo3.jpg"></a></h1>
         </div>
         <div class="col-md-6 header-middle">
             <form>
