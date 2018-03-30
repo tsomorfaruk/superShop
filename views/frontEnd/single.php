@@ -8,6 +8,7 @@
 include "../../vendor/autoload.php";
 use App\Product\Product;
 use App\Cart\Cart;
+
 $cart = new Cart();
 $product = new Product();
 
@@ -15,10 +16,10 @@ if (!empty($_GET['productId'])) {
     $id = $_GET['productId'];
     $getProductDetailsById = $product->getProductDetailsById($id);
 }
-if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $id = $_POST['productId'];
     $productQuantity = $_POST['product_quantity'];
-    $addToCart = $cart->addToCart($productQuantity,$id);
+    $addToCart = $cart->addToCart($productQuantity, $id);
 }
 ?>
 <!DOCTYPE html>
@@ -73,7 +74,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <div class="single">
     <div class="container">
         <?php
-        if ($getProductDetailsById) {
+        if (isset($getProductDetailsById)) {
             $getProductDetailsById = $getProductDetailsById->fetch_assoc();
             ?>
             <div class="col-md-6 single-right-left animated wow slideInUp animated" data-wow-delay=".5s"
@@ -124,7 +125,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <div class="color-quality">
                         <div class="color-quality-right">
                             <h5>Quantity :</h5>
-                            <select id="country1" name="product_quantity" onchange="change_country(this.value)" class="frm-field required sect" required>
+                            <select id="country1" name="product_quantity" onchange="change_country(this.value)"
+                                    class="frm-field required sect" required>
                                 <?php
                                 $productQuantity = $getProductDetailsById['product_quantity'];
                                 for ($i = 1; $i <= $productQuantity; $i++) {
@@ -136,10 +138,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             </select>
                         </div>
                     </div>
-                        <div class="clearfix"></div>
-                    <input type="hidden" name="productId" value="<?php echo $getProductDetailsById['product_id']?>">
+                    <div class="clearfix"></div>
+                    <input type="hidden" name="productId" value="<?php echo $getProductDetailsById['product_id'] ?>">
                     <div class="occasion-cart">
-                        <input type="submit" name="adToCart" value="Add to cart" class="item_add hvr-outline-out button2">
+                        <input type="submit" name="adToCart" value="Add to cart"
+                               class="item_add hvr-outline-out button2">
                     </div>
                 </form>
             </div>
@@ -170,6 +173,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         }
         ?>
     </div>
+    <?php
+    if (isset($addToCart)) {
+        ?>
+        <div color="red" font-size="18px"><?php echo $addToCart; ?></div>
+        <?php
+    }
+    ?>
 </div>
 
 <!-- //single -->

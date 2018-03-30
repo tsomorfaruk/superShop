@@ -7,20 +7,18 @@
  */
 include "../../vendor/autoload.php";
 use App\Cart\Cart;
-use App\Product\Product;
+use App\Session\Session;
 
 $cart = new Cart();
-$getCartProduct = $cart->getCartProduct();
-/*$product = new Product();
-$getPublishedProducts = $product->getPublishedProduct();
-if ($getPublishedProducts){
-    $getPublishedProducts = $getPublishedProducts->fetch_all();
-    foreach ($getPublishedProducts as $getPublishedProduct) {
-        echo "<pre>";
-        echo $getPublishedProduct[5];
-    }
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $cartId = $_POST['cartId'];
+    $productQuantity = $_POST['cproduct_quantity'];
+    $updateCart = $cart->updateCart($cartId, $productQuantity);
 }
-die();*/
+
+if (!isset($_GET['id'])){
+    echo "<meta http-equiv='refresh' content='0;URL=?id=Live'/>";
+}
 ?>
 
 <!DOCTYPE html>
@@ -69,6 +67,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <div class="checkout">
     <div class="container">
         <h3>My Shopping Bag</h3>
+        <?php
+        if (isset($updateCart)) {
+            ?>
+            <p><?php echo $updateCart;?></p>
+            <?php
+        }
+        ?>
         <div class="table-responsive checkout-right animated wow slideInUp" data-wow-delay=".5s">
             <table class="timetable_sub">
                 <thead>
@@ -80,10 +85,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <th>Price</th>
                 </tr>
                 </thead>
-
                 <?php
+                $getCartProduct = $cart->getCartProduct();
                 if ($getCartProduct) {
-                $sum = 0;
+                $quantity = 0;
+                    $sum = 0;
                 $i = 0;
                 while ($cartProduct = $getCartProduct->fetch_assoc()) {
                 $i++;
@@ -91,7 +97,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <tr class="rem1">
                     <td class="invert-closeb">
                         <div class="rem">
-                            <a href="#" class="close1"></a>
+                            <a href="deleteCart.php?cartId=<?php echo $cartProduct['cart_id']; ?>"
+                               onclick="return confirm('Are you want to delete this');"class="close1"></a>
                         </div>
                     </td>
                     <td class="invert-image" align="center"><img width="120px"
@@ -101,54 +108,70 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <td class="invert">
                         <div class="quantity">
                             <div class="quantity-select">
-                                <select id="country1" name="product_quantity"
-                                        onchange="change_country(this.value)">
-                                    <?php
-                                    $productQuantity = $cartProduct['product_quantity'];
-                                    for ($i = 1; $i <= $productQuantity; $i++) {
-                                        ?>
-                                        <option value="<?php echo $product_quantity = $i; ?>"><?php echo $i; ?></option>
+                                <form action="" method="post">
+                                    <select id="country1" name="cproduct_quantity">
+                                        <option value="<?php echo $cartProduct['cproduct_quantity'];?>"><?php echo $cartProduct['cproduct_quantity']; ?></option>
                                         <?php
-                                    }
-                                    ?>
-                                </select>
+                                        $productQuantity = $cartProduct['product_quantity'];
+                                        for ($i = 1; $i <= $productQuantity; $i++) {
+                                            ?>
+                                            <option value="<?php echo $product_quantity = $i; ?>"><?php echo $i; ?></option>
+                                            <?php
+                                        }
+                                        ?>
+                                    </select>
+                                    <input type="hidden" name="cartId" value="<?php echo $cartProduct['cart_id']; ?>">
+                                    <input type="submit" value="Update">
+                                </form>
+
                             </div>
                         </div>
                     </td>
                     <td class="invert"><?php echo $cartProduct['product_name']; ?></td>
                     <td class="invert">$<?php
-                        $total = $cartProduct['product_price'] * $cartProduct['product_quantity'];
+                        $total = $cartProduct['product_price'] * $cartProduct['cproduct_quantity'];;
                         echo $total; ?></td>
                     <?php
+                    $quantity = $quantity + $cartProduct['cproduct_quantity'];
                     $sum = $sum + $total;
+                    Session::set('sum',$sum);
+                    Session::set('quantity',$quantity);
                     }
                     }
                     ?>
                 </tr>
-
             </table>
         </div>
         <div class="checkout-left">
-
             <div class="checkout-right-basket animated wow slideInRight" data-wow-delay=".5s">
-                <a href="mens.html"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>Back To
+                <a href="index.php"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>Back To
                     Shopping</a>
             </div>
             <div class="checkout-left-basket animated wow slideInLeft" data-wow-delay=".5s">
                 <h4>Shopping basket</h4>
                 <ul>
                     <?php
-
+                    $cartCheck = $cart->cartCheck();
+                    if ($cartCheck){
+                        ?>
+                        <li>Total<i>-</i> <span>$ <?php
+                                    echo $sum; ?></span></li>
+                        <li>Vat<i>-</i> <span>10% <?php
+                                    $vat = $sum * 0.1;
+                                    echo $vat; ?></span></li>
+                        <li>Grand Total<i>-</i> <span>$ <?php
+                                    $gtotal = $vat + $sum;
+                                    echo $gtotal;?></span></li>
+                        <?php
+                    }
+                    else{
+                        ?>
+                        <li>Total<i>-</i> <span>$ <?php echo 0; ?></span></li>
+                    <li>Vat<i>-</i> <span>10% <?php echo 0; ?></span></li>
+                    <li>Grand Total<i>-</i> <span>$ <?php echo 0;?></span></li>
+                    <?php
+                    }
                     ?>
-                    <li>Total<i>-</i> <span>$ <?php echo $sum; ?></span></li>
-                    <li>Vat<i>-</i> <span>10% <?php
-                            $vat = $sum * 0.1;
-                            echo $vat; ?></span></li>
-                    <li>Grand Total<i>-</i> <span>$ <?php
-                            $gtotal = $vat + $sum;
-                            echo $gtotal; ?></span></li>
-
-
                 </ul>
             </div>
             <div class="clearfix"></div>

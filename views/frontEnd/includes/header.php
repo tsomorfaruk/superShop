@@ -5,26 +5,15 @@ use App\Config\Database;
 use App\Helpers\Format;
 use App\Product\Product;
 use App\Cart\Cart;
+
 Session::init();
 $database = new Database();
 $format = new Format();
 $product = new Product();
 $cart = new Cart();
-$getPubli
 ?>
 
 <!-- header -->
-<div class="header">
-    <div class="container">
-        <ul>
-            <li><span class="glyphicon glyphicon-time" aria-hidden="true"></span>Free and Fast Delivery</li>
-            <li><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>Free shipping On all orders
-            </li>
-            <li><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span><a href="mailto:info@example.com">info@example.com</a>
-            </li>
-        </ul>
-    </div>
-</div>
 <!-- //header -->
 <!-- header-bot -->
 <div class="header-bot">
@@ -56,7 +45,7 @@ $getPubli
         </div>
         <div class="col-md-3 header-right footer-bottom">
             <ul>
-                <li><a href="#" class="use1" data-toggle="modal" data-target="#myModal4"><span>Login</span></a></li>
+                <li><a href="login.php" class="use1"><span>Login</span></a></li>
                 <li><a class="fb" href="#"></a></li>
                 <li><a class="twi" href="#"></a></li>
                 <li><a class="insta" href="#"></a></li>
@@ -125,7 +114,7 @@ $getPubli
                             <li class="dropdown menu__item">
                                 <a href="#" class="dropdown-toggle menu__link" data-toggle="dropdown" role="button"
                                    aria-haspopup="true" aria-expanded="false">women's wear <span
-                                        class="caret"></span></a>
+                                            class="caret"></span></a>
                                 <ul class="dropdown-menu multi-column columns-3">
                                     <div class="row">
                                         <div class="col-sm-3 multi-gd-img">
@@ -158,7 +147,6 @@ $getPubli
                                 </ul>
                             </li>
                             <li class=" menu__item"><a class="menu__link" href="electronics.html">Electronics</a></li>
-                            <li class=" menu__item"><a class="menu__link" href="codes.html">Short Codes</a></li>
                             <li class=" menu__item"><a class="menu__link" href="contact.html">contact</a></li>
                         </ul>
                     </div>
@@ -167,18 +155,34 @@ $getPubli
         </div>
         <div class="top_nav_right">
             <div class="cart box_1">
-                <a href="checkout.html">
-                    <h3>
-                        <div class="total">
-                            <i class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></i>
-                            <span class="simpleCart_total"></span> (<span id="simpleCart_quantity"
-                                                                          class="simpleCart_quantity"></span> items)
-                        </div>
+                <?php
+                $getAmount = $cart->cartCheck();
+                if ($getAmount) {
+                    ?>
+                    <a href="cart.php">
+                        <h3>
+                            <div class="total">
+                                <i class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></i>
+                                 (
+                                    <?php
+                                    $quantity = Session::get('quantity');
+                                    echo $quantity;
+                                    ?>
+                                </span> items)
+                            </div>
 
-                    </h3>
-                </a>
-                <p><a href="javascript:;" class="simpleCart_empty">Empty Cart</a></p>
-
+                        </h3>
+                    </a>
+                    <p><a href="#" class="simpleCart_empty"><?php
+                            $sum = Session::get('sum');
+                            echo "$" . $sum;
+                            ?>
+                        </a></p>
+                    <?php
+                } else {
+                    echo "(Empty)";
+                }
+                ?>
             </div>
         </div>
         <div class="clearfix"></div>
