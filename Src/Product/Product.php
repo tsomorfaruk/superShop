@@ -170,4 +170,30 @@ class Product
         $getProductDetailsById = $this->db->select($query);
         return $getProductDetailsById;
     }
+
+    public function getManufacturerProducts($manufacturerId)
+    {
+        $query = "SELECT products.*,category.category_name,manufactures.manufacture_name
+        FROM products
+        INNER JOIN category
+        ON products.category_id = category.category_id
+        INNER JOIN manufactures
+        ON products.manufacturer_id = manufactures.manufacture_id
+        WHERE manufacturer_id = '$manufacturerId'";
+        $getManufacturerProducts = $this->db->select($query);
+        return $getManufacturerProducts;
+    }
+
+    public function getCategoryProducts($categoryId)
+    {
+        $query = "SELECT products.*,category.category_name,manufactures.manufacture_name
+        FROM products
+        INNER JOIN category
+        ON products.category_id = category.category_id
+        INNER JOIN manufactures
+        ON products.manufacturer_id = manufactures.manufacture_id
+        WHERE category_id = '$categoryId'";
+        $getCategoryProducts = $this->db->select($query);
+        return $getCategoryProducts;
+    }
 }

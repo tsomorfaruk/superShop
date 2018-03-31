@@ -3,15 +3,9 @@
  * Created by PhpStorm.
  * User: omor
  * Date: 3/30/2018
- * Time: 10:31 AM
+ * Time: 11:07 PM
  */
 include "../../vendor/autoload.php";
-use App\Session\Session;
-Session::init();
-$login = Session::get("customerLogin");
-if ($login == false){
-    header("Location:login.php");
-}
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
@@ -54,10 +48,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <body>
 <?php
 include("includes/header.php"); ?>
-<!-- banner -->
+<div class="product-easy">
+    <div class="container">
+        <h4>Choose Payment Option</h4>
+        <a href="paymentOffline.php" class="link-product-add-cart"> Offline Payment </a>
+        <a href="single.php?productId=" class="link-product-add-cart"> Online Payment </a>
+    </div>
+</div>
 <?php
 include("includes/footer.php"); ?>
-
-
 </body>
 </html>

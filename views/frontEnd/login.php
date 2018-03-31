@@ -8,14 +8,16 @@
 include "../../vendor/autoload.php";
 use App\Customer\Customer;
 use App\Session\Session;
-
-
+Session::init();
 $customer = new Customer();
+$login = Session::get("customerLogin");
+if ($login == true){
+    header("Location:order.php");
+}
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['registration'])) {
     $customerName = $_POST['customerName'];
     $customerEmail = $_POST['customerEmail'];
     $customerPassword = md5($_POST['customerPassword']);
-
     $customerInsert = $customer->customerInsert($customerName, $customerEmail, $customerPassword);
 }
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
@@ -23,10 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
     $customerPassword = md5($_POST['customerPassword']);
     $customerSelect = $customer->customerSelect($customerEmail, $customerPassword);
 }
-$login = Session::get("customerLogin");
-if ($login == true){
-    header("Location:order.php");
-}
+
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">

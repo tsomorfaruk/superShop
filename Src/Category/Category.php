@@ -85,4 +85,11 @@ class Category
             return $msg;
         }
     }
+
+    public function categorySelect()
+    {
+        $query = "SELECT * FROM category";
+        $categorySelect = $this->db->select($query);
+        return $categorySelect;
+    }
 }

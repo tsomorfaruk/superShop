@@ -2,23 +2,27 @@
 /**
  * Created by PhpStorm.
  * User: omor
- * Date: 3/29/2018
- * Time: 12:20 PM
+ * Date: 3/30/2018
+ * Time: 11:07 PM
  */
+
 include "../../vendor/autoload.php";
 use App\Cart\Cart;
 use App\Session\Session;
-
+Session::init();
+$login = Session::get("customerLogin");
+if ($login == false){
+    header("Location:login.php");
+}
 $cart = new Cart();
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $cartId = $_POST['cartId'];
-    $productQuantity = $_POST['cproduct_quantity'];
-    $updateCart = $cart->updateCart($cartId, $productQuantity);
+if (isset($_GET['orderId']) && $_GET['orderId']=='order'){
+    $customerId = Session::get("customerId");
+    $orderProduct = $cart->orderProduct($customerId);
+    $deleteData = $cart->deleteCustomerCart();
+    header("Location:success.php");
 }
 
-if (!isset($_GET['id'])){
-    echo "<meta http-equiv='refresh' content='0;URL=?id=Live'/>";
-}
+
 ?>
 
 <!DOCTYPE html>
@@ -57,85 +61,40 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <body>
 
 <?php include("includes/header.php"); ?>
-<div class="page-head">
-    <div class="container">
-        <h3>Check Out</h3>
-    </div>
-</div>
-<!-- //banner -->
-<!-- check out -->
 <div class="checkout">
     <div class="container">
         <h3>My Shopping Bag</h3>
-        <?php
-        if (isset($updateCart)) {
-            ?>
-            <p><?php echo $updateCart;?></p>
-            <?php
-        }
-        ?>
         <div class="table-responsive checkout-right animated wow slideInUp" data-wow-delay=".5s">
             <table class="timetable_sub">
                 <thead>
                 <tr>
-                    <th>Remove</th>
-                    <th>Product</th>
-                    <th>Quantity</th>
                     <th>Product Name</th>
+                    <th>Quantity</th>
                     <th>Price</th>
+                    <th>Total Price</th>
                 </tr>
                 </thead>
                 <?php
                 $getCartProduct = $cart->getCartProduct();
                 if ($getCartProduct) {
                 $quantity = 0;
-                    $sum = 0;
+                $sum = 0;
                 $i = 0;
                 while ($cartProduct = $getCartProduct->fetch_assoc()) {
                 $i++;
                 ?>
                 <tr class="rem1">
-                    <td class="invert-closeb">
-                        <div class="rem">
-                            <a href="deleteCart.php?cartId=<?php echo $cartProduct['cart_id']; ?>"
-                               onclick="return confirm('Are you want to delete this');"class="close1"></a>
-                        </div>
-                    </td>
-                    <td class="invert-image" align="center"><img width="120px"
-                                                                 src="<?php echo $cartProduct['product_image']; ?>"
-                                                                 alt=" "
-                                                                 class="img-responsive"/></td>
-                    <td class="invert">
-                        <div class="quantity">
-                            <div class="quantity-select">
-                                <form action="" method="post">
-                                    <select id="country1" name="cproduct_quantity">
-                                        <option value="<?php echo $cartProduct['cproduct_quantity'];?>"><?php echo $cartProduct['cproduct_quantity']; ?></option>
-                                        <?php
-                                        $productQuantity = $cartProduct['product_quantity'];
-                                        for ($i = 1; $i <= $productQuantity; $i++) {
-                                            ?>
-                                            <option value="<?php echo $product_quantity = $i; ?>"><?php echo $i; ?></option>
-                                            <?php
-                                        }
-                                        ?>
-                                    </select>
-                                    <input type="hidden" name="cartId" value="<?php echo $cartProduct['cart_id']; ?>">
-                                    <input type="submit" value="Update">
-                                </form>
-
-                            </div>
-                        </div>
-                    </td>
                     <td class="invert"><?php echo $cartProduct['product_name']; ?></td>
+                    <td class="invert"><?php echo $cartProduct['cproduct_quantity']; ?></td>
+                    <td class="invert"><?php echo $cartProduct['product_price']; ?></td>
                     <td class="invert">$<?php
                         $total = $cartProduct['product_price'] * $cartProduct['cproduct_quantity'];;
                         echo $total; ?></td>
                     <?php
                     $quantity = $quantity + $cartProduct['cproduct_quantity'];
                     $sum = $sum + $total;
-                    Session::set('sum',$sum);
-                    Session::set('quantity',$quantity);
+                    Session::set('sum', $sum);
+                    Session::set('quantity', $quantity);
                     }
                     }
                     ?>
@@ -144,35 +103,30 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         </div>
         <div class="checkout-left">
             <div class="checkout-right-basket animated wow slideInRight" data-wow-delay=".5s">
-                <a href="index.php"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>Back To
-                    Shopping</a>
-            </div>
-            <div class="checkout-right-basket animated wow slideInRight" data-wow-delay=".5s">
-                <a href="payment.php">Checkout     <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a>
+                <a href="?orderId=order">Order Now</a>
             </div>
             <div class="checkout-left-basket animated wow slideInLeft" data-wow-delay=".5s">
                 <h4>Shopping basket</h4>
                 <ul>
                     <?php
                     $cartCheck = $cart->cartCheck();
-                    if ($cartCheck){
+                    if ($cartCheck) {
                         ?>
                         <li>Total<i>-</i> <span>$ <?php
-                                    echo $sum; ?></span></li>
+                                echo $sum; ?></span></li>
                         <li>Vat<i>-</i> <span>10% <?php
-                                    $vat = $sum * 0.1;
-                                    echo $vat; ?></span></li>
+                                $vat = $sum * 0.1;
+                                echo $vat; ?></span></li>
                         <li>Grand Total<i>-</i> <span>$ <?php
-                                    $gtotal = $vat + $sum;
-                                    echo $gtotal;?></span></li>
+                                $gtotal = $vat + $sum;
+                                echo $gtotal; ?></span></li>
                         <?php
-                    }
-                    else{
+                    } else {
                         ?>
                         <li>Total<i>-</i> <span>$ <?php echo 0; ?></span></li>
-                    <li>Vat<i>-</i> <span>10% <?php echo 0; ?></span></li>
-                    <li>Grand Total<i>-</i> <span>$ <?php echo 0;?></span></li>
-                    <?php
+                        <li>Vat<i>-</i> <span>10% <?php echo 0; ?></span></li>
+                        <li>Grand Total<i>-</i> <span>$ <?php echo 0; ?></span></li>
+                        <?php
                     }
                     ?>
                 </ul>

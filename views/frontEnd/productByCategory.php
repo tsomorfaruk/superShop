@@ -1,5 +1,8 @@
 <?php
 include "../../vendor/autoload.php";
+use App\Product\Product;
+$product = new Product();
+$categoryId = $_GET['categoryId'];
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
@@ -70,37 +73,37 @@ include("includes/header.php"); ?>
                 <div class="resp-tabs-container">
                     <div class="tab-1 resp-tab-content" aria-labelledby="tab_item-0">
                         <?php
-                        $getPublishedProducts = $product->getPublishedProduct();
-                        if ($getPublishedProducts){
-                            while ($getPublishedProduct = $getPublishedProducts->fetch_assoc()) {
-                            ?>
-                            <div class="col-md-3 product-men">
-                                <div class="men-pro-item simpleCart_shelfItem">
-                                    <div class="men-thumb-item">
-                                        <img src="<?php echo $getPublishedProduct['product_image'];?>" height="220px" alt="" class="pro-image-front">
-                                        <img src="<?php echo $getPublishedProduct['product_image'];?>" height="220px" alt="" class="pro-image-back">
-                                        <div class="men-cart-pro">
-                                            <div class="inner-men-cart-pro">
-                                                <a href="single.php?productId=<?php echo $getPublishedProduct['product_id'];?>" class="link-product-add-cart">Quick View</a>
+                        $getCategoryProducts = $product->getCategoryProducts($categoryId);
+                        if ($getCategoryProducts){
+                            while ($getCategoryProduct = $getCategoryProducts->fetch_assoc()) {
+                                ?>
+                                <div class="col-md-3 product-men">
+                                    <div class="men-pro-item simpleCart_shelfItem">
+                                        <div class="men-thumb-item">
+                                            <img src="<?php echo $getCategoryProduct['product_image'];?>" height="220px" alt="" class="pro-image-front">
+                                            <img src="<?php echo $getCategoryProduct['product_image'];?>" height="220px" alt="" class="pro-image-back">
+                                            <div class="men-cart-pro">
+                                                <div class="inner-men-cart-pro">
+                                                    <a href="single.php?productId=<?php echo $getCategoryProduct['product_id'];?>" class="link-product-add-cart">Quick View</a>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <span class="product-new-top">New</span>
+                                            <span class="product-new-top">New</span>
 
-                                    </div>
-                                    <div class="item-info-product ">
-                                        <h4><a href="single.html"><?php echo $getPublishedProduct['product_name'];?></a></h4>
-                                        <div class="info-product-price">
-                                            <span class="item_price">$<?php echo $getPublishedProduct['product_price'];?></span>
-                                            <?php $productPrice = $getPublishedProduct['product_price'];
-                                            $delProductPrice = $productPrice + 15;?>
-                                            <del><?php echo $delProductPrice ;?></del>
                                         </div>
-                                        <a href="#" class="item_add single-item hvr-outline-out button2">Add to cart</a>
+                                        <div class="item-info-product ">
+                                            <h4><a href="single.html"><?php echo $getCategoryProduct['product_name'];?></a></h4>
+                                            <div class="info-product-price">
+                                                <span class="item_price">$<?php echo $getCategoryProduct['product_price'];?></span>
+                                                <?php $productPrice = $getCategoryProduct['product_price'];
+                                                $delProductPrice = $productPrice + 15;?>
+                                                <del><?php echo $delProductPrice ;?></del>
+                                            </div>
+                                            <a href="#" class="item_add single-item hvr-outline-out button2">Add to cart</a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <?php
-                        }}
+                                <?php
+                            }}
                         ?>
                         <div class="clearfix"></div>
                     </div>

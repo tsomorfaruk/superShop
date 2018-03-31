@@ -2,21 +2,24 @@
 /**
  * Created by PhpStorm.
  * User: omor
- * Date: 3/30/2018
- * Time: 10:31 AM
+ * Date: 3/29/2018
+ * Time: 12:20 PM
  */
 include "../../vendor/autoload.php";
+use App\Cart\Cart;
 use App\Session\Session;
+$cart = new Cart();
 Session::init();
 $login = Session::get("customerLogin");
 if ($login == false){
     header("Location:login.php");
 }
 ?>
+
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/html">
+<html>
 <head>
-    <title>Smart Shop a Ecommerce Online Shopping Category Flat Bootstrap Responsive Website Template | Home ::
+    <title>Smart Shop a Ecommerce Online Shopping Category Flat Bootstrap Responsive Website Template | Check Out ::
         w3layouts</title>
     <!-- for-mobile-apps -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -31,11 +34,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         } </script>
     <!-- //for-mobile-apps -->
     <link href="../../assets/css/bootstrap.css" rel="stylesheet" type="text/css" media="all"/>
-    <!-- pignose css -->
-    <link href="../../assets/css/pignose.layerslider.css" rel="stylesheet" type="text/css" media="all"/>
-
-
-    <!-- //pignose css -->
     <link href="../../assets/css/style.css" rel="stylesheet" type="text/css" media="all"/>
     <!-- js -->
     <script type="text/javascript" src="../../assets/js/jquery-2.1.4.min.js"></script>
@@ -52,12 +50,52 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <script src="../../assets/js/jquery.easing.min.js"></script>
 </head>
 <body>
-<?php
-include("includes/header.php"); ?>
-<!-- banner -->
+
+<?php include("includes/header.php"); ?>
+<div class="page-head">
+    <div class="container">
+        <h3>Check Out</h3>
+    </div>
+</div>
+<!-- //banner -->
+<!-- check out -->
+<div class="checkout">
+    <div class="container">
+        <h3>My Order Details</h3>
+
+        <div class="table-responsive checkout-right animated wow slideInUp" data-wow-delay=".5s">
+            <table class="timetable_sub">
+                <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                </tr>
+                </thead>
+                <?php
+                Session::init();
+                $customerId = Session::get("customerId");
+                $getOrderProduct = $cart->getOrderProduct($customerId);
+                if ($getOrderProduct) {
+                $i = 0;
+                while ($orderProduct = $getOrderProduct->fetch_assoc()) {
+                $i++;
+                ?>
+                <tr class="rem1">
+                    <td class="invert"><?php echo $orderProduct['product_name']; ?></td>
+                    <td class="invert"><?php echo $orderProduct['product_quantity']; ?></td>
+                    <td class="invert">$<?php
+                        $total = $orderProduct['product_price'] * $orderProduct['product_quantity'];;
+                        echo $total; ?></td>
+                </tr><?php }}?>
+            </table>
+        </div>
+
+    </div>
+</div>
+<!-- //check out -->
+
 <?php
 include("includes/footer.php"); ?>
-
-
 </body>
 </html>

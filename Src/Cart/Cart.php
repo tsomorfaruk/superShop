@@ -90,6 +90,14 @@ class Cart
             return $msg;
         }
     }
+    public function deleteCustomerCart()
+    {
+        Session::init();
+        $sessionId = session_id();
+        $query = "DELETE FROM cart WHERE session_id='$sessionId'";
+        $this->db->delete($query);
+
+    }
 
     public function cartCheck()
     {
@@ -98,6 +106,34 @@ class Cart
         $query = "SELECT * FROM cart WHERE session_id='$sessionId'";
         $result = $this->db->select($query);
         return $result;
+    }
+
+    public function orderProduct($customerId)
+    {
+        Session::init();
+        $sessionId = session_id();
+        $query = "SELECT * FROM cart WHERE session_id='$sessionId'";
+        $getProduct = $this->db->select($query);
+        if ($getProduct){
+            while ($data = $getProduct->fetch_assoc())
+            {
+                $productId = $data['product_id'];
+                $productName = $data['product_name'];
+                $productQuantity = $data['cproduct_quantity'];
+                $productPrice = $data['product_price'];
+                $productImage = $data['product_image'];
+                $query = "INSERT INTO orders(customer_id,product_id,product_name,product_price,product_quantity,product_image) 
+                  VALUES('$customerId','$productId','$productName','$productPrice','$productQuantity',
+                  '$productImage')";
+                $orderProduct = $this->db->insert($query);
+            }
+        }
+    }
+
+    public function getOrderProduct($customerId){
+        $query = "SELECT * FROM orders WHERE customer_id='$customerId'";
+        $orderProduct = $this->db->select($query);
+        return $orderProduct;
     }
 
 }

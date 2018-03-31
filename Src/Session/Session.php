@@ -40,6 +40,14 @@ class Session
             header("Location:login.php");
         }
     }
+/*    public static function checkCustomerSession()
+    {
+        self::init();
+        if (self::get("customerLogin") == false) {
+            self::destroy();
+            header("Location:login.php");
+        }
+    }*/
 
     public static function checkLogin()
     {
@@ -48,6 +56,13 @@ class Session
             header("Location:dashboard.php");
         }
     }
+/*    public static function checkCustomerLogin()
+    {
+        self::init();
+        if (self::get("customerLogin") == true) {
+            header("Location:order.php");
+        }
+    }*/
 
     public static function destroy()
     {

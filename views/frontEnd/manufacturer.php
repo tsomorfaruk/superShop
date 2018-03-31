@@ -1,5 +1,7 @@
 <?php
 include "../../vendor/autoload.php";
+use App\Manufacture\Manufacture;
+
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
@@ -62,52 +64,40 @@ include("includes/header.php"); ?>
         </script>
         <div class="sap_tabs">
             <div id="horizontalTab" style="display: block; width: 100%; margin: 0px;">
-                <ul class="resp-tabs-list">
-                    <li class="resp-tab-item" aria-controls="tab_item-0" role="tab"><span>Latest Designs</span></li>
-                    <li class="resp-tab-item" aria-controls="tab_item-1" role="tab"><span>Special Offers</span></li>
-                    <li class="resp-tab-item" aria-controls="tab_item-2" role="tab"><span>Collections</span></li>
-                </ul>
-                <div class="resp-tabs-container">
-                    <div class="tab-1 resp-tab-content" aria-labelledby="tab_item-0">
-                        <?php
-                        $getPublishedProducts = $product->getPublishedProduct();
-                        if ($getPublishedProducts){
-                            while ($getPublishedProduct = $getPublishedProducts->fetch_assoc()) {
-                            ?>
-                            <div class="col-md-3 product-men">
-                                <div class="men-pro-item simpleCart_shelfItem">
-                                    <div class="men-thumb-item">
-                                        <img src="<?php echo $getPublishedProduct['product_image'];?>" height="220px" alt="" class="pro-image-front">
-                                        <img src="<?php echo $getPublishedProduct['product_image'];?>" height="220px" alt="" class="pro-image-back">
-                                        <div class="men-cart-pro">
-                                            <div class="inner-men-cart-pro">
-                                                <a href="single.php?productId=<?php echo $getPublishedProduct['product_id'];?>" class="link-product-add-cart">Quick View</a>
-                                            </div>
-                                        </div>
-                                        <span class="product-new-top">New</span>
+                <div class="table-responsive checkout-right animated wow slideInUp" data-wow-delay=".5s">
+                    <table class="timetable_sub">
+                        <thead>
+                        <tr>
+                            <th>Manufacturer Name</th>
+                        </tr>
+                        </thead>
 
-                                    </div>
-                                    <div class="item-info-product ">
-                                        <h4><a href="single.html"><?php echo $getPublishedProduct['product_name'];?></a></h4>
-                                        <div class="info-product-price">
-                                            <span class="item_price">$<?php echo $getPublishedProduct['product_price'];?></span>
-                                            <?php $productPrice = $getPublishedProduct['product_price'];
-                                            $delProductPrice = $productPrice + 15;?>
-                                            <del><?php echo $delProductPrice ;?></del>
-                                        </div>
-                                        <a href="#" class="item_add single-item hvr-outline-out button2">Add to cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <?php
-                        }}
+                        <?php
+                        $manufacturer = new Manufacture();
+                        $getManufacturer = $manufacturer->manufacturerSelect();
+                        if ($getManufacturer) {
+                            $i = 0;
+                            while ($manufacture = $getManufacturer->fetch_assoc()) {
+                                ?>
+                                <tr class="rem1"><td class="invert">
+                                    <a href="productByManufacturer.php?manufacturerId=<?php echo $manufacture['manufacture_id'];?>"><?php echo $manufacture['manufacture_name']; ?></a>
+                                </td>
+
+
+                                </tr><?php
+                            }
+                        }
                         ?>
-                        <div class="clearfix"></div>
-                    </div>
+
+
+                    </table>
                 </div>
+                <div class="clearfix"></div>
             </div>
         </div>
     </div>
+</div>
+</div>
 </div>
 <?php
 include("includes/footer.php"); ?>

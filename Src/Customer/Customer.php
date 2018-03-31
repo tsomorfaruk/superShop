@@ -11,6 +11,7 @@ include("../../vendor/autoload.php");
 use App\Config\Database;
 use App\Helpers\Format;
 use App\Session\Session;
+Session::init();
 
 class Customer
 {

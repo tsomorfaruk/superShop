@@ -87,4 +87,10 @@ class Manufacture
             return $msg;
         }
     }
+
+    public function manufacturerSelect(){
+        $query = "SELECT * FROM manufactures";
+        $manufacturerSelect = $this->db->select($query);
+        return $manufacturerSelect;
+    }
 }

@@ -2,10 +2,11 @@
 /**
  * Created by PhpStorm.
  * User: omor
- * Date: 3/30/2018
- * Time: 10:31 AM
+ * Date: 3/31/2018
+ * Time: 8:15 AM
  */
 include "../../vendor/autoload.php";
+use App\Cart\Cart;
 use App\Session\Session;
 Session::init();
 $login = Session::get("customerLogin");
@@ -13,10 +14,11 @@ if ($login == false){
     header("Location:login.php");
 }
 ?>
+
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/html">
+<html>
 <head>
-    <title>Smart Shop a Ecommerce Online Shopping Category Flat Bootstrap Responsive Website Template | Home ::
+    <title>Smart Shop a Ecommerce Online Shopping Category Flat Bootstrap Responsive Website Template | Check Out ::
         w3layouts</title>
     <!-- for-mobile-apps -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -31,11 +33,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         } </script>
     <!-- //for-mobile-apps -->
     <link href="../../assets/css/bootstrap.css" rel="stylesheet" type="text/css" media="all"/>
-    <!-- pignose css -->
-    <link href="../../assets/css/pignose.layerslider.css" rel="stylesheet" type="text/css" media="all"/>
-
-
-    <!-- //pignose css -->
     <link href="../../assets/css/style.css" rel="stylesheet" type="text/css" media="all"/>
     <!-- js -->
     <script type="text/javascript" src="../../assets/js/jquery-2.1.4.min.js"></script>
@@ -52,12 +49,20 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <script src="../../assets/js/jquery.easing.min.js"></script>
 </head>
 <body>
-<?php
-include("includes/header.php"); ?>
-<!-- banner -->
+
+<?php include("includes/header.php"); ?>
+<div class="checkout">
+    <div class="container">
+        <h3>My Shopping Bag</h3>
+        <div class="table-responsive checkout-right animated wow slideInUp" data-wow-delay=".5s">
+                <a href="orderDetails.php">Order Details<span aria-hidden="true"></span></a>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+<!-- //check out -->
+
 <?php
 include("includes/footer.php"); ?>
-
-
 </body>
 </html>
