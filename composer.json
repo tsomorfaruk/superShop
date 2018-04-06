@@ -3,5 +3,8 @@
     "psr-4" : {
       "App\\" : "Src"
     }
+  },
+  "require":{
+    "mpdf/mpdf":"v6.0.0"
   }
 }

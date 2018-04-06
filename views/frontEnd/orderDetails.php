@@ -62,7 +62,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <div class="checkout">
     <div class="container">
         <h3>My Order Details</h3>
-
+<div> <a href="pdf.php">Pdf</a></div>
         <div class="table-responsive checkout-right animated wow slideInUp" data-wow-delay=".5s">
             <table class="timetable_sub">
                 <thead>
